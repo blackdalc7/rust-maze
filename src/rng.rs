@@ -1,9 +1,11 @@
 //! A tiny seeded random number generator (xorshift64*), so the project needs no crates
 //! and the same seed always gives the same maze.
 
+/// Seeded xorshift64* generator state.
 pub struct Rng(u64);
 
 impl Rng {
+    /// A generator seeded from `seed`; equal seeds give equal streams.
     pub fn new(seed: u64) -> Self {
         // splitmix64 scramble so small seeds like 1, 2, 3 still give very different streams
         let mut z = seed.wrapping_add(0x9E37_79B9_7F4A_7C15);
@@ -12,6 +14,7 @@ impl Rng {
         Rng((z ^ (z >> 31)) | 1)
     }
 
+    /// The next 64 random bits.
     pub fn next_u64(&mut self) -> u64 {
         let mut x = self.0;
         x ^= x >> 12;

@@ -43,6 +43,7 @@ pub fn ascii(maze: &Maze, path: &[Cell]) -> String {
     out
 }
 
+/// Cell size in pixels and the colours used for the SVG output.
 pub struct SvgStyle {
     pub cell: usize,
     pub wall: &'static str,

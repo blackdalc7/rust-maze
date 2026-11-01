@@ -1,5 +1,7 @@
 # 🧩 rust-maze
 
+[![CI](https://github.com/blackdalc7/rust-maze/actions/workflows/ci.yml/badge.svg)](https://github.com/blackdalc7/rust-maze/actions/workflows/ci.yml)
+
 A command line tool written in **Rust** that generates mazes with two different algorithms, solves them with **breadth-first search** or **A\***, and draws them in the terminal or as SVG pictures. It has **no dependencies**, not even for random numbers.
 
 I wanted a first Rust project that was small enough to finish but still made me deal with ownership, iterators, enums and `Option`/`Result` properly. Mazes turned out to be perfect for that, and they look cool.

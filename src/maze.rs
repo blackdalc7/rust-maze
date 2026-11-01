@@ -20,6 +20,7 @@ pub enum Algorithm {
 }
 
 impl Algorithm {
+    /// Parse a command line name (`backtracker`/`dfs` or `prim`/`prims`), ignoring case.
     pub fn parse(s: &str) -> Option<Self> {
         match s.to_ascii_lowercase().as_str() {
             "backtracker" | "dfs" => Some(Self::Backtracker),
@@ -29,6 +30,7 @@ impl Algorithm {
     }
 }
 
+/// A `width` x `height` grid of cells, each storing its open walls as `N`/`E`/`S`/`W` bits.
 pub struct Maze {
     pub width: usize,
     pub height: usize,
@@ -46,6 +48,7 @@ impl Maze {
         }
     }
 
+    /// Carve a perfect maze (exactly one path between any two cells) with the chosen algorithm.
     pub fn generate(width: usize, height: usize, algorithm: Algorithm, rng: &mut Rng) -> Self {
         let mut maze = Maze::closed(width, height);
         match algorithm {
@@ -59,6 +62,7 @@ impl Maze {
         y * self.width + x
     }
 
+    /// Whether the wall on side `dir` of `cell` has been carved open.
     pub fn is_open(&self, cell: Cell, dir: u8) -> bool {
         self.cells[self.idx(cell)] & dir != 0
     }
@@ -160,6 +164,7 @@ impl Maze {
     }
 }
 
+/// The direction facing `dir` (N and S, E and W). Panics on anything else.
 pub fn opposite(dir: u8) -> u8 {
     match dir {
         N => S,

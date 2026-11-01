@@ -4,6 +4,7 @@ use crate::maze::{Cell, Maze};
 use std::cmp::Reverse;
 use std::collections::{BinaryHeap, VecDeque};
 
+/// Which search algorithm to solve with.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Solver {
     Bfs,
@@ -11,6 +12,7 @@ pub enum Solver {
 }
 
 impl Solver {
+    /// Parse a command line name (`bfs`, `astar` or `a*`), ignoring case.
     pub fn parse(s: &str) -> Option<Self> {
         match s.to_ascii_lowercase().as_str() {
             "bfs" => Some(Self::Bfs),
@@ -20,6 +22,7 @@ impl Solver {
     }
 }
 
+/// A solved path and the search that found it.
 pub struct Solution {
     /// Cells from start to goal, inclusive.
     pub path: Vec<Cell>,
@@ -27,6 +30,7 @@ pub struct Solution {
     pub explored: Vec<Cell>,
 }
 
+/// Solve from `start` to `goal` with `solver`, or `None` if the goal is unreachable.
 pub fn solve(maze: &Maze, start: Cell, goal: Cell, solver: Solver) -> Option<Solution> {
     match solver {
         Solver::Bfs => bfs(maze, start, goal),
@@ -49,6 +53,7 @@ fn rebuild(maze: &Maze, came_from: &[Option<Cell>], start: Cell, goal: Cell) -> 
     path
 }
 
+/// Breadth-first search: explores outwards in rings and always finds a shortest path.
 pub fn bfs(maze: &Maze, start: Cell, goal: Cell) -> Option<Solution> {
     let mut came_from = vec![None; maze.width * maze.height];
     let mut seen = vec![false; maze.width * maze.height];
@@ -79,6 +84,7 @@ fn manhattan((ax, ay): Cell, (bx, by): Cell) -> usize {
     ax.abs_diff(bx) + ay.abs_diff(by)
 }
 
+/// A* with the Manhattan distance heuristic: a shortest path, usually exploring fewer cells than BFS.
 pub fn astar(maze: &Maze, start: Cell, goal: Cell) -> Option<Solution> {
     let n = maze.width * maze.height;
     let mut came_from = vec![None; n];
