@@ -1,0 +1,8 @@
+[package]
+name = "rust-maze"
+version = "1.0.0"
+edition = "2021"
+description = "Generate mazes, solve them with BFS and A*, and draw them in the terminal or as SVG"
+license = "MIT"
+
+[dependencies]
